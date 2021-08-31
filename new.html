@@ -16,8 +16,8 @@ window.addEventListener("DOMContentLoaded", function () {
   // Success and Error functions for after the form is submitted
 
   function success() {
-    form.reset();
- 
+    // form.reset();
+    location.href = "pay_for_astro.html";
     status.classList.add("success");
     status.innerHTML = "Thanks for contacting us. Complete the payment!";
 	
