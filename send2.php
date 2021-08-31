@@ -1,20 +1,45 @@
-<?php 
-if(isset($_POST['submit'])){
-    $to = "ssy.balu@gmail.com"; // this is your Email address
-    $from = $_POST['email']; // this is the sender's Email address
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $subject = "Form submission";
-    // $subject2 = "Copy of your form submission";
-    
-    $message = $first_name . " " . $last_name . " wrote the following:" . "\n\n" . $_POST['message'];
-    // $message2 = "Here is a copy of your message " . $first_name . "\n\n" . $_POST['message'];
+<?php
 
-    // $headers = "From:" . $from;
-   //  $headers2 = "From:" . $to;
-    mail($to,$subject,$message);
-    // mail($from,$subject2,$message2); 
-    echo "Mail Sent. Thank you " . $first_name . ", we will contact you shortly.";
-    // You can also use header('Location: thank_you.php'); to redirect to another page.
-    }
+#Receive user input
+$email_address = $_POST['email_address'];
+$feedback = $_POST['feedback'];
+
+#Filter user input
+function filter_email_header($form_field) {  
+return preg_replace('/[nr|!/<>^$%*&]+/','',$form_field);
+}
+
+$email_address  = filter_email_header($email_address);
+
+#Send email
+$headers = "From: $email_addressn";
+$sent = mail('you@domain.com', 'Feedback Form Submission', $feedback, $headers);
+
+#Thank user or notify them of a problem
+if ($sent) {
+
+?><html>
+<head>
+<title>Thank You</title>
+</head>
+<body>
+<h1>Thank You</h1>
+<p>Thank you for your feedback.</p>
+</body>
+</html>
+<?php
+
+} else {
+
+?><html>
+<head>
+<title>Something went wrong</title>
+</head>
+<body>
+<h1>Something went wrong</h1>
+<p>We could not send your feedback. Please try again.</p>
+</body>
+</html>
+<?php
+}
 ?>
